@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { Client } = require('../database/models');
 const jwt = require('jsonwebtoken');
+const sendClientLoginEmail = require('../utils/sendClientLoginEmail');
 
 const getAllClients = async (req, res) => {
     const userId = req.user.id;
@@ -43,6 +44,12 @@ const createClient = async (req, res) => {
         const client = await Client.create({ firstName, lastName, email, company, userId });
         const token = generateClientToken(client);
         const loginUrl = `https://yourfrontend.com/client-login?token=${token}`;
+        const fullName = `${client.firstName} ${client.lastName}`;
+        try {
+            await sendClientLoginEmail(client.email, fullName, loginUrl)
+        } catch (emailError) {
+            console.warn('Client created, but failed to send email:', emailError.message);
+        }
         res.status(201).json({ client, loginUrl });
     } catch (error) {
         res.status(500).json({ message: 'Could not create new client', error: error.message });
