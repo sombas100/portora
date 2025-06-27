@@ -5,8 +5,21 @@ const { sequelize } = require('./database/models/index');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const authRoutes = require('./routes/authRoutes');
+const clientRoutes = require('./routes/clientRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const fileRoutes = require('./routes/fileRoutes');
+
+app.use('/uploads', express.static('uploads'));
+
 app.use(express.json());
 app.use(cors());
+
+
+app.use('/api/auth', authRoutes);
+app.use('/api/clients', clientRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/files', fileRoutes);
 
 const connectDb = async () => {
     console.log('Checking database connection...');
