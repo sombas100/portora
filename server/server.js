@@ -11,6 +11,7 @@ const projectRoutes = require('./routes/projectRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 const webhookRoutes = require('./routes/stripeWebhook')
+const billingRoutes = require('./routes/billingRoutes');
 
 app.use('/uploads', express.static('uploads'));
 app.use('/api/stripe/webhook', webhookRoutes);
@@ -24,6 +25,7 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/files', fileRoutes);
 app.use('api/feedback', feedbackRoutes);
+app.use('/api/billing', billingRoutes);
 
 const connectDb = async () => {
     console.log('Checking database connection...');

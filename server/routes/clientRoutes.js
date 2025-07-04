@@ -4,11 +4,12 @@ const { getAllClients, getClientById, createClient, deleteClient } = require('..
 const authenticate = require('../middleware/authMiddleware');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware')
 const sendClientLoginEmail = require('../utils/sendClientLoginEmail');
+const checkSubscription = require('../middleware/checkSubscription');
 
 router.get('/test-email', async (req, res) => {
   try {
     const fakeName = 'Test Client';
-    const fakeEmail = 'sombas100@yahoo.com'; // use your own email here
+    const fakeEmail = 'sombas100@yahoo.com';
     const loginUrl = 'https://portora.com/client-login?token=abc123';
 
     await sendClientLoginEmail(fakeEmail, fakeName, loginUrl);
@@ -21,8 +22,8 @@ router.get('/test-email', async (req, res) => {
 
 router.get('/', authenticate, getAllClients);
 router.get('/:id', authenticate, getClientById);
-router.post('/create', authenticate, createClient);
-router.delete('/:id', authenticate, deleteClient);
+router.post('/create', authenticate, checkSubscription(), createClient);
+router.delete('/:id', authenticate, checkSubscription(), deleteClient);
 
 router.get('/me', clientAuthenticate, (req, res) => {
     res.json({ client: req.client })
