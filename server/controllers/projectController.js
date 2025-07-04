@@ -50,7 +50,7 @@ const createProject = async (req, res) => {
 const updateProjectStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
-    const userId = req.body.id;
+    const userId = req.user.id;
 
     try {
         const project = await Project.findOne({ where: { id, userId } });

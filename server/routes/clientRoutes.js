@@ -4,6 +4,7 @@ const { getAllClients, getClientById, createClient, deleteClient } = require('..
 const authenticate = require('../middleware/authMiddleware');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware')
 const sendClientLoginEmail = require('../utils/sendClientLoginEmail');
+
 router.get('/test-email', async (req, res) => {
   try {
     const fakeName = 'Test Client';
@@ -17,9 +18,10 @@ router.get('/test-email', async (req, res) => {
     res.status(500).json({ message: 'Email test failed', error: err.message });
   }
 });
+
 router.get('/', authenticate, getAllClients);
 router.get('/:id', authenticate, getClientById);
-router.post('/', authenticate, createClient);
+router.post('/create', authenticate, createClient);
 router.delete('/:id', authenticate, deleteClient);
 
 router.get('/me', clientAuthenticate, (req, res) => {

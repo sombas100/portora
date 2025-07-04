@@ -9,8 +9,11 @@ const authRoutes = require('./routes/authRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const fileRoutes = require('./routes/fileRoutes');
+const feedbackRoutes = require('./routes/feedbackRoutes');
+const webhookRoutes = require('./routes/stripeWebhook')
 
 app.use('/uploads', express.static('uploads'));
+app.use('/api/stripe/webhook', webhookRoutes);
 
 app.use(express.json());
 app.use(cors());
@@ -20,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/files', fileRoutes);
+app.use('api/feedback', feedbackRoutes);
 
 const connectDb = async () => {
     console.log('Checking database connection...');
