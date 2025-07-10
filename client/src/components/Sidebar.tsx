@@ -1,19 +1,41 @@
-import { RiDashboardHorizontalFill } from "react-icons/ri";
+import {
+  RiDashboardHorizontalFill,
+  RiTeamFill,
+  RiFolder3Fill,
+  RiSettings3Fill,
+} from "react-icons/ri";
 
 const Sidebar = () => {
   return (
-    <div className="flex max-w-44 items-start justify-center bg-white h-screen">
-      <div>
-        <ul className="flex flex-col font-semibold mt-10 text-zinc-500 tracking-wide">
-          <li className="flex items-center my-2">
-            <RiDashboardHorizontalFill className="mr-2" /> Dashboard
+    <aside className="w-64 bg-white h-screen shadow-md border-r px-6 py-8">
+      <nav className="flex flex-col space-y-6">
+        <div className="text-2xl ml-8 mb-8 flex items-center font-bold text-emerald-600 ">
+          Portora
+        </div>
+
+        <ul className="space-y-2 text-gray-700 font-medium">
+          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+            <RiDashboardHorizontalFill className="mr-3 text-xl" />
+            Dashboard
           </li>
-          <li className="my-2">Clients</li>
-          <li className="my-2">Projects</li>
-          <li className="my-2">Settings</li>
+
+          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+            <RiTeamFill className="mr-3 text-xl" />
+            Clients
+          </li>
+
+          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+            <RiFolder3Fill className="mr-3 text-xl" />
+            Projects
+          </li>
+
+          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+            <RiSettings3Fill className="mr-3 text-xl" />
+            Settings
+          </li>
         </ul>
-      </div>
-    </div>
+      </nav>
+    </aside>
   );
 };
 

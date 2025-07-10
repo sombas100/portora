@@ -1,26 +1,29 @@
-import React from "react";
+import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <div className="flex items-center justify-between max-w-full z-50 p-4 px-10 bg-emerald-400">
-      <div>
-        <h1 className="text-3xl text-white tracking-tight">
-          Port<span className="text-white">ora</span>
-        </h1>
+    <nav className="w-full z-50 bg-white shadow-sm px-6 py-4 flex items-center justify-between border-b">
+      {/* Search */}
+      <div className="relative w-72 hidden md:flex items-center">
+        <FaSearch className="absolute left-3 text-gray-400" />
+        <input
+          type="text"
+          placeholder="Search..."
+          className="pl-10 pr-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+        />
       </div>
-      <div className="place-items-start">
-        <label className="font-bold text-white" htmlFor="">
-          Search
-        </label>
-        <input className="bg-gray-100 w-72 ml-2 px-2 py-1 " type="text" />
+
+      {/* User */}
+      <div className="flex items-center space-x-4">
+        <div className="text-right hidden md:block">
+          <p className="text-sm text-gray-500">Welcome back,</p>
+          <h2 className="text-md font-semibold text-gray-800">Admin</h2>
+        </div>
+        <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shadow-sm">
+          A
+        </div>
       </div>
-      <div>
-        <p className="border-2 border-white rounded-4xl w-60"></p>
-      </div>
-      <div>
-        <h2 className="font-semibold text-white">Welcome, admin</h2>
-      </div>
-    </div>
+    </nav>
   );
 };
 
