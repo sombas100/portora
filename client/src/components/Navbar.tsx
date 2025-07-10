@@ -1,6 +1,8 @@
 import { FaSearch } from "react-icons/fa";
+import { useAuth } from "../context/authContext";
 
 const Navbar = () => {
+  const { user } = useAuth();
   return (
     <nav className="w-full z-50 bg-white shadow-sm px-6 py-4 flex items-center justify-between border-b">
       {/* Search */}
@@ -16,8 +18,14 @@ const Navbar = () => {
       {/* User */}
       <div className="flex items-center space-x-4">
         <div className="text-right hidden md:block">
-          <p className="text-sm text-gray-500">Welcome back,</p>
-          <h2 className="text-md font-semibold text-gray-800">Admin</h2>
+          {user && (
+            <>
+              <p className="text-sm text-gray-500">Welcome back,</p>
+              <h2 className="text-md font-semibold text-gray-800">
+                {user?.name || "Guest"}
+              </h2>
+            </>
+          )}
         </div>
         <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shadow-sm">
           A
