@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { getAllClients, getClientById, createClient, deleteClient } = require('../controllers/clientController');
+const { Project } = require('../database/models')
+const { getAllClients, getClientById, createClient, deleteClient, resendLoginLink } = require('../controllers/clientController');
+const { clientLoginFromToken } = require('../controllers/clientAuthController');
 const authenticate = require('../middleware/authMiddleware');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware')
 const sendClientLoginEmail = require('../utils/sendClientLoginEmail');
@@ -21,13 +23,36 @@ router.get('/test-email', async (req, res) => {
 });
 
 router.get('/', authenticate, getAllClients);
+router.get('/login-from-token', clientLoginFromToken)
 router.get('/:id', authenticate, getClientById);
 router.post('/create', authenticate, checkSubscription(), createClient);
 router.delete('/:id', authenticate, checkSubscription(), deleteClient);
+router.post('/:id/resend-login', authenticate, resendLoginLink);
 
-router.get('/me', clientAuthenticate, (req, res) => {
-    res.json({ client: req.client })
-})
+
+router.get('/me', clientAuthenticate, async (req, res) => {
+  try {
+    const client = req.client;
+
+    const projects = await Project.findAll({
+      where: { clientId: client.id },
+      attributes: ['id', 'title', 'status', 'createdAt', 'updatedAt']
+    });
+
+    res.json({
+      client: {
+        id: client.id,
+        firstName: client.firstName,
+        lastName: client.lastName,
+        email: client.email,
+        company: client.company
+      },
+      projects
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load dashboard', error: err.message });
+  }
+});
 
 
 module.exports = router

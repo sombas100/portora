@@ -18,7 +18,7 @@ const createFeedback = async (req, res) => {
 
         res.status(201).json(feedback)
     } catch (error) {
-        res.status(500).json({ message: 'Could not submit feedback', error: err.message });
+        res.status(500).json({ message: 'Could not submit feedback', error: error.message });
     }
 }
 
@@ -30,7 +30,12 @@ const getProjectFeedback = async (req, res) => {
         const project = await Project.findOne({ where: { id: projectId, userId: user.id }});
         if (!project) return res.status(404).json({ message: 'Project not found' })
         
-        const feedback = await Feedback.findAll({ where: projectId });
+        const feedback = await Feedback.findAll({
+            where: { projectId },
+            order: [['createdAt', 'DESC']],
+            include: [{ model: Client, attributes: ['firstName', 'lastName'] }]
+        });
+
         res.status(200).json(feedback);
     } catch (error) {
         res.status(500).json({ message: 'Could not fetch feedback', error: err.message });

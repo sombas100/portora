@@ -8,18 +8,18 @@ const createCheckoutSession = async (req, res) => {
     try {
         let customerId = user.stripeCustomerId;
         if (!customerId) {
-            const customer = stripe.customers.create({
+            const customer = await stripe.customers.create({
                 email: user.email,
                 name: user.name,
                 metadata: { userId: user.id }
             });
 
-            const customerId = customer.id
+            customerId = customer.id
             await user.update({ stripeCustomerId: customerId});
         }
 
         const session = await stripe.checkout.sessions.create({
-            mode: 'sunscription',
+            mode: 'subscription',
             customer: customerId,
             line_items: [
                 {
@@ -33,7 +33,7 @@ const createCheckoutSession = async (req, res) => {
 
         res.json({ url: session.url })
     } catch (error) {
-        console.error(err);
+        console.error(error);
         res.status(500).json({ message: 'Stripe session failed', error: err.message });
     }
 }

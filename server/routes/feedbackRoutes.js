@@ -3,8 +3,9 @@ const router = express.Router();
 const { createFeedback, getProjectFeedback } = require('../controllers/feedbackController');
 const authenticate = require('../middleware/authMiddleware');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware');
+const ensureVerifiedClient = require('../middleware/ensureVerifiedClient');
 
-router.post('/', clientAuthenticate, createFeedback);
+router.post('/', clientAuthenticate, ensureVerifiedClient, createFeedback);
 
 router.get('/project/:projectId', authenticate, getProjectFeedback);
 

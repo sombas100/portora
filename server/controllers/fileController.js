@@ -30,7 +30,7 @@ const uploadFile = async (req, res) => {
       uploader
     });
 
-    res.status(201).json(newFile);
+    res.status(201).json({ file: newFile, uploadedBy: uploader });
   } catch (err) {
     res.status(500).json({ message: 'Upload failed', error: err.message });
   }

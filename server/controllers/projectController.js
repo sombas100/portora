@@ -55,6 +55,10 @@ const updateProjectStatus = async (req, res) => {
     try {
         const project = await Project.findOne({ where: { id, userId } });
         if (!project) return res.status(404).json({ message: 'Project not found' });
+        const validStatuses = ['In Progress', 'Completed', 'Pending'];
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ message: 'Invalid project status' });
+        }
 
         project.status = status;
         await project.save();

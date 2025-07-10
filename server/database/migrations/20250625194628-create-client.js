@@ -25,6 +25,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      emailVerified: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
