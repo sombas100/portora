@@ -14,9 +14,10 @@ interface DecodedToken {
 interface AuthContextType {
   user: DecodedToken | null;
   role: UserRole | null;
+  name: string | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (token: string, role: UserRole) => void;
+  login: (token: string, name: string, role: UserRole) => void;
   logout: () => void;
 }
 
@@ -25,17 +26,19 @@ const authContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<DecodedToken | null>(null);
+  const [name, setName] = useState<string | null>(null);
   const [role, setRole] = useState<UserRole | null>(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedRole = localStorage.getItem("role") as UserRole;
-
+    const storedName = localStorage.getItem("name");
     if (storedToken) {
       try {
         const decoded = jwtDecode<DecodedToken>(storedToken);
         setUser(decoded);
         setToken(storedToken);
+        setName(storedName);
         setRole(storedRole);
       } catch (error) {
         console.error("Invlaid token", error);
@@ -44,13 +47,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = (newToken: string, userRole: UserRole) => {
+  const login = (newToken: string, name: string, userRole: UserRole) => {
     const decoded = jwtDecode<DecodedToken>(newToken);
     setUser(decoded);
     setToken(newToken);
-    setRole(role);
+    setName(name);
+    setRole(userRole);
     localStorage.setItem("token", newToken);
     localStorage.setItem("role", userRole);
+    localStorage.setItem("name", name);
   };
 
   const logout = () => {
@@ -65,6 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const value: AuthContextType = {
     token,
     user,
+    name,
     role,
     isAuthenticated: !!token,
     login,

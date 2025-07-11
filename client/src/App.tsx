@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/admin/Dashboard";
 import Sidebar from "./components/Sidebar";
 import DashboardLayout from "./components/layout/DashboardLayout";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
         </Route>
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
