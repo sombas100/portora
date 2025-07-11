@@ -45,7 +45,11 @@ const getClientById = async (req, res) => {
 
 const generateClientToken = (client) => {
     return jwt.sign(
-        { clientId: client.id, email: client.email }, 
+        { 
+          id: client.id, 
+          email: client.email, 
+          firstName: client.firstName, 
+          lastName: client.lastName, }, 
         process.env.JWT_SECRET,
         { expiresIn: '7d' }
     )
@@ -61,12 +65,16 @@ const resendLoginLink = async (req, res) => {
     if (!client) return res.status(404).json({ message: 'Client not found' });
 
     const token = jwt.sign(
-      { clientId: client.id, email: client.email },
+      { 
+        id: client.id, 
+        email: client.email, 
+        firstName: client.firstName, 
+        lastName: client.lastName, },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
-    const loginUrl = `https://yourfrontend.com/client-login?token=${token}`;
+    const loginUrl = `http://localhost:5173/client-login?token=${token}`;
     const fullName = `${client.firstName} ${client.lastName}`;
 
     await sendClientLoginEmail(client.email, fullName, loginUrl);
@@ -104,7 +112,7 @@ const createClient = async (req, res) => {
     const client = await Client.create({ firstName, lastName, email, company, userId });
 
     const token = generateClientToken(client);
-    const loginUrl = `https://yourfrontend.com/client-login?token=${token}`;
+    const loginUrl = `http://localhost:5173/client-login?token=${token}`;
     const fullName = `${client.firstName} ${client.lastName}`;
 
     

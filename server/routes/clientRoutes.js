@@ -25,7 +25,7 @@ router.get('/test-email', async (req, res) => {
 router.get('/', authenticate, getAllClients);
 router.get('/login-from-token', clientLoginFromToken)
 router.get('/:id', authenticate, getClientById);
-router.post('/create', authenticate, checkSubscription(), createClient);
+router.post('/create', authenticate, createClient);
 router.delete('/:id', authenticate, checkSubscription(), deleteClient);
 router.post('/:id/resend-login', authenticate, resendLoginLink);
 

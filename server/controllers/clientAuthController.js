@@ -11,7 +11,7 @@ const clientLoginFromToken = async (req, res) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log('Decoded token:', decoded);
-        const client = await Client.findByPk(decoded.clientId);
+        const client = await Client.findByPk(decoded.id);
         if (!client) return res.status(404).json({ message: 'Client not found' });
 
         if (!client.emailVerified) {
@@ -20,7 +20,12 @@ const clientLoginFromToken = async (req, res) => {
         }
 
         const newToken = jwt.sign(
-            { id: client.id, email: client.email, company: client.company }, 
+            { id: client.id,
+                 email: client.email, 
+                firstName: client.firstName, 
+                lastName: client.lastName, 
+                company: client.company 
+            }, 
             process.env.JWT_SECRET, 
             { expiresIn: '6h' }
         )

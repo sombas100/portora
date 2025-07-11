@@ -1,9 +1,10 @@
-import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/admin/Dashboard";
-import Sidebar from "./components/Sidebar";
 import DashboardLayout from "./components/layout/DashboardLayout";
+import ClientDashboardLayout from "./components/layout/ClientDashboardLayout";
 import Login from "./pages/Login";
+import ClientLoginPage from "./pages/ClientLogin";
+import ClientDashboard from "./pages/ClientDashboard";
 
 function App() {
   return (
@@ -12,7 +13,11 @@ function App() {
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
         </Route>
+        <Route path="/client-dashboard" element={<ClientDashboardLayout />}>
+          <Route index element={<ClientDashboard />} />
+        </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/client-login" element={<ClientLoginPage />} />
       </Routes>
     </div>
   );

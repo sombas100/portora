@@ -12,6 +12,20 @@ const getAllProjects = async (req, res) => {
     }
 }
 
+const getClientProject = async (req, res) => {
+    const client = req.client;
+
+    try {
+        const projects = await Project.findAll({ where: { clientId: client.id }})
+        if (!projects || projects.length === 0) {
+            return res.status(404).json({ message: 'No projects found' });
+        }
+        res.status(200).json(projects);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching client projects', error: error.message });
+    }
+}
+
 const getProjectById = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
@@ -68,9 +82,26 @@ const updateProjectStatus = async (req, res) => {
     }
 }
 
+const deleteProject = async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    try {
+        const project = await Project.findOne({ where: { id, userId }})
+        if (!project) return res.status(404).json({ message: 'Project not found' });
+
+        await project.destroy();
+        res.status(204).end();
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to delete project', error: error.message });
+    }
+}
+
 module.exports = {
     getAllProjects,
     getProjectById,
+    getClientProject,
     createProject,
-    updateProjectStatus
+    updateProjectStatus,
+    deleteProject,
 }

@@ -12,7 +12,8 @@ const clientAuthenticate = async (req, res, next) => {
     try {
         const token = authHeader.split(' ')[1]
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const client = await Client.findByPk(decoded.clientId)
+        console.log("Decoded token:", decoded);
+        const client = await Client.findByPk(decoded.id)
 
         if (!client) return res.status(404).json({ message: 'Client not found' });
         req.client = client
