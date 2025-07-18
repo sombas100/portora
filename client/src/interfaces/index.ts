@@ -6,6 +6,10 @@ export interface Project {
     dueDate?: Date;
     clientId: number;
     userId: number;
+    Client: {
+        firstName: string;
+        lastName: string;
+    }
 }
 
 export interface Client {

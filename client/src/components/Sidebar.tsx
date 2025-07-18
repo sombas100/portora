@@ -4,6 +4,7 @@ import {
   RiFolder3Fill,
   RiSettings3Fill,
 } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -12,24 +13,27 @@ const Sidebar = () => {
         <div className="text-2xl ml-8 mb-8 flex items-center font-bold text-emerald-600 ">
           Portora
         </div>
-
         <ul className="space-y-2 text-gray-700 font-medium">
-          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
-            <RiDashboardHorizontalFill className="mr-3 text-xl" />
-            Dashboard
-          </li>
+          <Link to="/">
+            <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+              <RiDashboardHorizontalFill className="mr-3 text-xl" />
+              Dashboard
+            </li>
+          </Link>
 
-          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+          <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
             <RiTeamFill className="mr-3 text-xl" />
             Clients
           </li>
 
-          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
-            <RiFolder3Fill className="mr-3 text-xl" />
-            Projects
-          </li>
+          <Link to="/projects">
+            <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+              <RiFolder3Fill className="mr-3 text-xl" />
+              Projects
+            </li>
+          </Link>
 
-          <li className="flex items-center px-3 py-2 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+          <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
             <RiSettings3Fill className="mr-3 text-xl" />
             Settings
           </li>
