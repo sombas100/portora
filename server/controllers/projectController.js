@@ -38,7 +38,14 @@ const getProjectById = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
     try {
-        const project = await Project.findOne({ where: { id, userId } })
+        const project = await Project.findOne({ where: { id, userId },
+        include: [
+            {
+                model: Client,
+                attributes: ['firstName', 'lastName', 'email'],
+            }
+        ]
+        })
         if (!project) return res.status(404).json({ message: 'Project not found' });
     
         res.status(200).json(project)

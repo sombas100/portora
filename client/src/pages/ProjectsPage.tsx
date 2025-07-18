@@ -4,6 +4,7 @@ import { useAuth } from "../context/authContext";
 import type { Project } from "../interfaces";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const ProjectsPage = () => {
   const { token } = useAuth();
@@ -84,7 +85,7 @@ const ProjectsPage = () => {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="p-2 border rounded w-full md:w-1/4"
         >
-          <option value="All">All Statuses</option>
+          <option value="All">All</option>
           <option value="Pending">Pending</option>
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
@@ -123,9 +124,11 @@ const ProjectsPage = () => {
               </p>
 
               <div className="flex gap-3 mt-4">
-                <button className="text-sm text-blue-600 hover:underline">
-                  View
-                </button>
+                <Link to={`/projects/${project.id}`}>
+                  <button className="text-sm text-blue-600 hover:underline">
+                    View
+                  </button>
+                </Link>
                 <button className="text-sm text-yellow-600 hover:underline">
                   Edit
                 </button>

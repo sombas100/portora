@@ -4,11 +4,13 @@ export interface Project {
     description: string
     status: 'Pending' | 'In  Progress' | 'Completed';
     dueDate?: Date;
+    createdAt: Date;
     clientId: number;
     userId: number;
     Client: {
         firstName: string;
         lastName: string;
+        email: string;
     }
 }
 

@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import ClientLoginPage from "./pages/ClientLogin";
 import ClientDashboard from "./pages/ClientDashboard";
 import ProjectsPage from "./pages/ProjectsPage";
+import ProjectDetails from "./pages/ProjectDetailsPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/:id" element={<ProjectDetails />} />
         </Route>
         <Route path="/client-dashboard" element={<ClientDashboardLayout />}>
           <Route index element={<ClientDashboard />} />
