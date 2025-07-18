@@ -3,7 +3,15 @@ const { Project, Client } = require('../database/models');
 const getAllProjects = async (req, res) => {
     const userId = req.user.id;
     try {
-        const projects = await Project.findAll({ where: { userId} });
+        const projects = await Project.findAll({ 
+            where: { userId },
+            include: [
+                {
+                    model: Client,
+                    attributes: ['id', 'firstName', 'lastName', 'company', 'email'],
+                }
+            ]
+         });
         if (projects.length === 0) return res.status(404).json({ message: 'No projects found'})
         
         res.status(200).json(projects);

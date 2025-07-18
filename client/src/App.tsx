@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/admin/Dashboard";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import ClientDashboardLayout from "./components/layout/ClientDashboardLayout";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/client-login" element={<ClientLoginPage />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

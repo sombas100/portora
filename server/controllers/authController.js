@@ -19,7 +19,7 @@ const register = async (req, res) => {
             role: 'Freelancer',
             emailVerified: 'incomplete'
         })
-        const token = jwt.sign({id: user.id, name: user.name, role: user.role}, process.env.JWT_SECRET, { expiresIn: '7d' })
+        const token = jwt.sign({ id: user.id, name: user.name, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' })
         res.status(201).json({ message: 'User has successfully registered', user, token })
     } catch (error) {
         res.status(500).json({ message: 'Internal server error', error: error.message });

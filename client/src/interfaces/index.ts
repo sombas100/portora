@@ -7,3 +7,13 @@ export interface Project {
     clientId: number;
     userId: number;
 }
+
+export interface Client {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    company: string;
+    emailVerified: boolean;
+    clientId: number;
+}

@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     plan: {
       type: DataTypes.ENUM('free', 'starter', 'pro', 'enterprise'),
-      allowNull: true,
+      allowNull: false,
+      defaultValue: 'free'
     },
     subscriptionEndDate: {
       type: DataTypes.DATE,

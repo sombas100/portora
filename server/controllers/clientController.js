@@ -14,7 +14,9 @@ const getAllClients = async (req, res) => {
     enterprise: 10
   };
     try {
+      console.log("Fetching clients for user ID:", userId);
         const clients = await Client.findAll({ where: { userId } })
+        console.log("Clients found:", clients.length);
         const maxClients = planLimits[plan] ?? 0;
         const remainingSlots = Math.max(maxClients - clients.length, 0);
         if (clients.length === 0) return res.status(404).json({ message: 'No clients found' });
