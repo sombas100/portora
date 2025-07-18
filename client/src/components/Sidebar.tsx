@@ -20,11 +20,12 @@ const Sidebar = () => {
               Dashboard
             </li>
           </Link>
-
-          <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
-            <RiTeamFill className="mr-3 text-xl" />
-            Clients
-          </li>
+          <Link to="/clients">
+            <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+              <RiTeamFill className="mr-3 text-xl" />
+              Clients
+            </li>
+          </Link>
 
           <Link to="/projects">
             <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">

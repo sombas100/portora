@@ -8,6 +8,7 @@ import ClientLoginPage from "./pages/ClientLogin";
 import ClientDashboard from "./pages/ClientDashboard";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetails from "./pages/ProjectDetailsPage";
+import ClientsPage from "./pages/ClientsPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
+          <Route path="/clients" element={<ClientsPage />} />
         </Route>
         <Route path="/client-dashboard" element={<ClientDashboardLayout />}>
           <Route index element={<ClientDashboard />} />

@@ -8,6 +8,7 @@ export interface Project {
     clientId: number;
     userId: number;
     Client: {
+        id: number;
         firstName: string;
         lastName: string;
         email: string;

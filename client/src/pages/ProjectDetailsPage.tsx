@@ -26,7 +26,7 @@ const ProjectDetails = () => {
         });
         setProject(res.data);
         setEditStatus(res.data.status);
-        setEditDueDate(res.data.dueDate?.split("T")[0] || ""); // Format for input[type="date"]
+        setEditDueDate(res.data.dueDate?.split("T")[0] || "");
       } catch (error: any) {
         console.error(error);
       } finally {
@@ -176,6 +176,7 @@ const ProjectDetails = () => {
         >
           Back to Projects
         </button>
+
         <button
           onClick={handleDelete}
           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
