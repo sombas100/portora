@@ -18,11 +18,15 @@ const ResendLoginLinkButton = ({
   const handleResend = async () => {
     setLoading(true);
     try {
-      const res = await client.post(`/clients/${clientId}/resend-login`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await client.post(
+        `/clients/${clientId}/resend-login`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       toast.success(`Login link sent to ${res.data.fullName}`);
     } catch (error: any) {

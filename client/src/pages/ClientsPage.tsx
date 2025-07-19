@@ -3,6 +3,7 @@ import client from "../api/client";
 import { useAuth } from "../context/authContext";
 import type { Client } from "../interfaces";
 import CreateProjectModal from "../components/ui/CreateModal";
+import { Link } from "react-router-dom";
 
 const ClientsPage = () => {
   const { token } = useAuth();
@@ -72,12 +73,19 @@ const ClientsPage = () => {
                     {client.email} — {client.company}
                   </p>
                 </div>
-                <button
-                  onClick={() => openModal(client.id)}
-                  className="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600 transition"
-                >
-                  Create Project
-                </button>
+                <div className="space-x-2">
+                  <Link to={`/clients/${client.id}`}>
+                    <button className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition">
+                      View Details
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => openModal(client.id)}
+                    className="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600 transition"
+                  >
+                    Create Project
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

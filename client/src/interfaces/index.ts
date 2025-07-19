@@ -23,4 +23,5 @@ export interface Client {
     company: string;
     emailVerified: boolean;
     clientId: number;
+    createdAt: Date;
 }

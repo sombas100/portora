@@ -34,6 +34,7 @@ const getClientProject = async (req, res) => {
     }
 }
 
+
 const getProjectById = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
@@ -97,6 +98,25 @@ const updateProjectStatus = async (req, res) => {
     }
 }
 
+const updateProjectDueDate = async (req, res) => {
+  const { id } = req.params;
+  const { dueDate } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const project = await Project.findOne({ where: { id, userId } });
+    if (!project) return res.status(404).json({ message: 'Project not found' });
+
+    project.dueDate = dueDate;
+    await project.save();
+
+    res.status(200).json({ message: 'Due date updated successfully', dueDate: project.dueDate });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating due date', error: error.message });
+  }
+};
+
+
 const deleteProject = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
@@ -118,5 +138,6 @@ module.exports = {
     getClientProject,
     createProject,
     updateProjectStatus,
+    updateProjectDueDate,
     deleteProject,
 }

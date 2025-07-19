@@ -67,7 +67,7 @@ const ProjectDetails = () => {
 
     try {
       const res = await client.put(
-        `/projects/${project.id}`,
+        `/projects/${project.id}/due-date`,
         { dueDate: editDueDate },
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Project } = require('../database/models')
-const { getAllClients, getClientById, createClient, deleteClient, resendLoginLink } = require('../controllers/clientController');
+const { getAllClients, getClientById, getClientProjectsList, createClient, deleteClient, resendLoginLink } = require('../controllers/clientController');
 const { clientLoginFromToken } = require('../controllers/clientAuthController');
 const authenticate = require('../middleware/authMiddleware');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware')
@@ -24,6 +24,7 @@ router.get('/test-email', async (req, res) => {
 
 router.get('/', authenticate, getAllClients);
 router.get('/login-from-token', clientLoginFromToken)
+router.get('/:id/projects', authenticate, getClientProjectsList);
 router.get('/:id', authenticate, getClientById);
 router.post('/create', authenticate, createClient);
 router.delete('/:id', authenticate, checkSubscription(), deleteClient);

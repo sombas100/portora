@@ -24,7 +24,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/files', fileRoutes);
-app.use('api/feedback', feedbackRoutes);
+app.use('/api/feedback', feedbackRoutes);
 app.use('/api/billing', billingRoutes);
 
 const connectDb = async () => {
