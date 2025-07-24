@@ -13,6 +13,7 @@ const ClientsPage = () => {
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
 
   useEffect(() => {
+    if (!token) return;
     const fetchClients = async () => {
       try {
         const res = await client.get("/clients", {

@@ -7,6 +7,6 @@ const ensureVerifiedClient = require('../middleware/ensureVerifiedClient');
 
 router.post('/', clientAuthenticate, ensureVerifiedClient, createFeedback);
 
-router.get('/project/:projectId', authenticate, getProjectFeedback);
+router.get('/projects/:projectId/feedback', authenticate, getProjectFeedback);
 
 module.exports = router;

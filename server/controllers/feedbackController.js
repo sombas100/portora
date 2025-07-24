@@ -1,4 +1,4 @@
-const { Feedback, Project } = require('../database/models');
+const { Feedback, Project, Client } = require('../database/models');
 
 const createFeedback = async (req, res) => {
     const { projectId, message } = req.body;
@@ -38,7 +38,7 @@ const getProjectFeedback = async (req, res) => {
 
         res.status(200).json(feedback);
     } catch (error) {
-        res.status(500).json({ message: 'Could not fetch feedback', error: err.message });
+        res.status(500).json({ message: 'Could not fetch feedback', error: error.message });
     }
 }
 

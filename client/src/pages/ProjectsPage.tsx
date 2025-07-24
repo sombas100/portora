@@ -14,6 +14,7 @@ const ProjectsPage = () => {
   const [statusFilter, setStatusFilter] = useState("All");
 
   useEffect(() => {
+    if (!token) return;
     const fetchProjects = async () => {
       try {
         const res = await client.get("/projects", {

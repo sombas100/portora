@@ -25,3 +25,17 @@ export interface Client {
     clientId: number;
     createdAt: Date;
 }
+
+export interface Feedback {
+    id: number;
+    message: string;
+    createdAt: string;
+    projectId: number;
+    userId: number;
+    userName?: string;
+    Client: {
+        id: number;
+        firstName: string;
+        lastName: string;
+    }
+}

@@ -10,6 +10,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetails from "./pages/ProjectDetailsPage";
 import ClientsPage from "./pages/ClientsPage";
 import ClientDetailsPage from "./pages/ClientDetailsPage";
+import ClientProjectDetails from "./pages/client/ClientProjectDetails";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         </Route>
         <Route path="/client-dashboard" element={<ClientDashboardLayout />}>
           <Route index element={<ClientDashboard />} />
+          <Route path="projects/:id" element={<ClientProjectDetails />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/client-login" element={<ClientLoginPage />} />

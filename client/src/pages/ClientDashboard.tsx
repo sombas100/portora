@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import client from "../api/client";
 import { useClientAuth } from "../context/clientAuthContext";
 import type { Project } from "../interfaces";
+import { Link } from "react-router-dom";
 
 const ClientDashboard = () => {
   const { client: loggedInClient } = useClientAuth();
@@ -13,7 +14,9 @@ const ClientDashboard = () => {
       try {
         const token = localStorage.getItem("clientToken");
         console.log("Client token:", token);
-        const res = await client.get("/projects/client");
+        const res = await client.get("/projects/client", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setProjects(res.data);
       } catch (err) {
         console.error("Error fetching projects:", err);
@@ -64,9 +67,11 @@ const ClientDashboard = () => {
         <ul className="mt-4 space-y-4">
           {projects.map((project) => (
             <li key={project.id} className="bg-white p-4 shadow rounded">
-              <h3 className="text-lg font-semibold">{project.title}</h3>
-              <p className="text-gray-600 mt-1">{project.description}</p>
-              <div className="mt-2">{getStatusBadge(project.status)}</div>
+              <Link to={`/client-dashboard/projects/${project.id}`}>
+                <h3 className="text-lg font-semibold">{project.title}</h3>
+                <p className="text-gray-600 mt-1">{project.description}</p>
+                <div className="mt-2">{getStatusBadge(project.status)}</div>
+              </Link>
             </li>
           ))}
         </ul>

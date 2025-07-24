@@ -55,6 +55,27 @@ const getProjectById = async (req, res) => {
     }
 }
 
+// In controllers/projectController.js
+const getSingleClientProject = async (req, res) => {
+  const { id } = req.params;
+  const client = req.client;
+
+  try {
+    const project = await Project.findOne({
+      where: { id, clientId: client.id }
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.status(200).json(project);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching project", error: error.message });
+  }
+};
+
+
 const createProject = async (req, res) => {
     const { title, description, status, dueDate, clientId } = req.body;
     const userId = req.user.id;
@@ -139,5 +160,6 @@ module.exports = {
     createProject,
     updateProjectStatus,
     updateProjectDueDate,
+    getSingleClientProject,
     deleteProject,
 }

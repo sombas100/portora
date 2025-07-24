@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../api/client";
 import { useAuth } from "../context/authContext";
-import type { Project } from "../interfaces";
+import type { Project, Feedback } from "../interfaces";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 
@@ -10,13 +10,17 @@ const ProjectDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { token } = useAuth();
   const navigate = useNavigate();
+
   const [project, setProject] = useState<Project | null>(null);
+  const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
+  const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
   const [editStatus, setEditStatus] = useState<string>("");
   const [editDueDate, setEditDueDate] = useState<string>("");
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
+    if (!id || !token) return;
     const fetchProject = async () => {
       try {
         const res = await client.get(`/projects/${id}`, {
@@ -34,7 +38,19 @@ const ProjectDetails = () => {
       }
     };
 
+    const fetchFeedback = async () => {
+      try {
+        const res = await client.get(`/feedback/projects/${id}/feedback`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFeedbackList(res.data);
+      } catch (error) {
+        console.error("Failed to fetch feedback:", error);
+      }
+    };
+
     fetchProject();
+    fetchFeedback();
   }, [id, token]);
 
   const handleStatusUpdate = async () => {
@@ -49,7 +65,6 @@ const ProjectDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
       setProject((prev) =>
         prev ? { ...prev, status: res.data.status } : prev
       );
@@ -176,13 +191,42 @@ const ProjectDetails = () => {
         >
           Back to Projects
         </button>
-
         <button
           onClick={handleDelete}
           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
         >
           Delete Project
         </button>
+      </div>
+
+      {/* FEEDBACK SECTION */}
+      <div className="mt-10 border-t pt-6">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">
+          Client Feedback
+        </h2>
+
+        {feedbackList.length === 0 ? (
+          <p className="text-sm text-gray-500">No feedback yet.</p>
+        ) : (
+          <ul className="space-y-4">
+            {feedbackList.map((feedback) => (
+              <li
+                key={feedback.id}
+                className="bg-gray-50 p-4 rounded border border-gray-200"
+              >
+                <p className="text-gray-700 text-sm mb-1">{feedback.message}</p>
+                <div className="text-xs text-gray-500 flex justify-between">
+                  <span>
+                    {feedback.Client
+                      ? `${feedback.Client.firstName} ${feedback.Client.lastName}`
+                      : "Anonymous"}
+                  </span>
+                  <span>{format(new Date(feedback.createdAt), "PPP p")}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import client from "../api/client";
-import { useClientAuth } from "../context/clientAuthContext";
+import client from ".././api/client";
+import { useClientAuth } from ".././context/clientAuthContext";
 
 const ClientLoginPage = () => {
   const [searchParams] = useSearchParams();
