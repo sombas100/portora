@@ -84,7 +84,7 @@ const ProjectsPage = () => {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="p-2 border rounded w-full md:w-1/4"
+          className="p-2 border cursor-pointer rounded w-full md:w-1/4"
         >
           <option value="All">All</option>
           <option value="Pending">Pending</option>
@@ -126,16 +126,16 @@ const ProjectsPage = () => {
 
               <div className="flex gap-3 mt-4">
                 <Link to={`/projects/${project.id}`}>
-                  <button className="text-sm text-blue-600 hover:underline">
+                  <button className="text-sm cursor-pointer text-blue-600 hover:underline">
                     View
                   </button>
                 </Link>
-                <button className="text-sm text-yellow-600 hover:underline">
+                <button className="text-sm cursor-pointer text-yellow-600 hover:underline">
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(project.id)}
-                  className="text-sm text-red-600 hover:underline"
+                  className="text-sm cursor-pointer text-red-600 hover:underline"
                 >
                   Delete
                 </button>

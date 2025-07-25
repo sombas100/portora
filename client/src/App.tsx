@@ -11,6 +11,9 @@ import ProjectDetails from "./pages/ProjectDetailsPage";
 import ClientsPage from "./pages/ClientsPage";
 import ClientDetailsPage from "./pages/ClientDetailsPage";
 import ClientProjectDetails from "./pages/client/ClientProjectDetails";
+import BillingCancelled from "./pages/stripe/BillingCancel";
+import BillingSuccess from "./pages/stripe/BillingSuccess";
+import CancelSubscriptionPage from "./pages/stripe/CancelSubscriptionPage";
 
 function App() {
   return (
@@ -29,6 +32,12 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/client-login" element={<ClientLoginPage />} />
+        <Route path="/billing-success" element={<BillingSuccess />} />
+        <Route path="/billing-cancelled" element={<BillingCancelled />} />
+        <Route
+          path="/cancel-subscription"
+          element={<CancelSubscriptionPage />}
+        />
       </Routes>
       <ToastContainer />
     </div>

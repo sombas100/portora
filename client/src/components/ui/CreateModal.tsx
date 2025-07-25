@@ -105,7 +105,7 @@ const CreateProjectModal: FC<Props> = ({
               Status
             </label>
             <select
-              className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-emerald-500"
+              className="w-full border cursor-pointer rounded px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-emerald-500"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               required
@@ -122,7 +122,7 @@ const CreateProjectModal: FC<Props> = ({
             </label>
             <input
               type="date"
-              className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-emerald-500"
+              className="w-full border rounded cursor-pointer px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-emerald-500"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
             />
@@ -132,14 +132,14 @@ const CreateProjectModal: FC<Props> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border rounded text-gray-600 hover:bg-gray-100"
+              className="px-4 py-2 border rounded cursor-pointer text-gray-600 hover:bg-gray-100"
               disabled={submitting}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition"
+              className="px-4 py-2 bg-emerald-500 cursor-pointer text-white rounded hover:bg-emerald-600 transition"
               disabled={submitting}
             >
               {submitting ? "Creating..." : "Create"}

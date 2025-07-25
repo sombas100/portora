@@ -2,7 +2,6 @@ import {
   RiDashboardHorizontalFill,
   RiTeamFill,
   RiFolder3Fill,
-  RiSettings3Fill,
   RiLoginCircleLine,
   RiLogoutCircleLine,
 } from "react-icons/ri";
@@ -10,24 +9,43 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import UpgradeModal from "../components/ui/UpgradeModal";
+import client from "../api/client";
 
 const Sidebar = () => {
   const { token, logout } = useAuth();
   const navigate = useNavigate();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [userPlan, setUserPlan] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPlan = async () => {
+      try {
+        const res = await client.get("/billing/status", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUserPlan(res.data.plan);
+      } catch (err) {
+        console.error("Failed to fetch plan:", err);
+        setUserPlan(null);
+      }
+    };
+
+    if (token) {
+      fetchPlan();
+    }
+  }, [token]);
 
   const handleLogout = () => {
     toast.info("Logging out...");
-
-    // Trigger animation first
     setIsLoggingOut(true);
 
-    // Wait for animation to complete before logging out
     setTimeout(() => {
       logout();
       navigate("/login");
-    }, 1000); // adjust timing to match animation
+    }, 1000);
   };
 
   return (
@@ -59,12 +77,24 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
-            <RiSettings3Fill className="mr-3 text-xl" />
-            Settings
-          </li>
+          {token && userPlan && (
+            <>
+              {userPlan === "pro" || userPlan === "enterprise" ? (
+                <li className="flex items-center px-3 py-3 rounded-md text-gray-500 cursor-not-allowed">
+                  ✅ Subscribed ({userPlan})
+                </li>
+              ) : (
+                <li
+                  onClick={() => setShowUpgradeModal(true)}
+                  className="flex items-center px-3 py-3 rounded-md hover:bg-indigo-50 transition cursor-pointer text-indigo-600"
+                >
+                  ⚡ Upgrade Plan
+                </li>
+              )}
+            </>
+          )}
 
-          {/* Conditional Button */}
+          {/* Login / Logout */}
           {!token ? (
             <Link to="/login">
               <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer text-indigo-600">
@@ -90,6 +120,12 @@ const Sidebar = () => {
           )}
         </ul>
       </nav>
+
+      {/* Upgrade Plan Modal */}
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+      />
     </aside>
   );
 };

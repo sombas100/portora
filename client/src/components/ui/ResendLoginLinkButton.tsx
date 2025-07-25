@@ -42,7 +42,7 @@ const ResendLoginLinkButton = ({
     <button
       onClick={handleResend}
       disabled={loading}
-      className={`px-3 py-1 text-sm rounded bg-indigo-600 text-white hover:bg-indigo-700 transition disabled:opacity-50 ${className}`}
+      className={`px-3 py-1 text-sm rounded cursor-pointer bg-indigo-600 text-white hover:bg-indigo-700 transition disabled:opacity-50 ${className}`}
     >
       {loading ? "Sending..." : "Resend Login Link"}
     </button>

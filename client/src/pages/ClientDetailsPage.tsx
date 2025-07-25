@@ -5,6 +5,7 @@ import { useAuth } from "../context/authContext";
 import type { Client, Project } from "../interfaces";
 import ResendLoginLinkButton from "../components/ui/ResendLoginLinkButton";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
 
 const ClientDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,6 +50,24 @@ const ClientDetailsPage = () => {
     }
   }, [id, token]);
 
+  const handleDeleteClient = async () => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this client? This action cannot be undone."
+    );
+    if (!confirm || !id) return;
+
+    try {
+      await client.delete(`/clients/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Client deleted successfully");
+      navigate("/clients");
+    } catch (error: any) {
+      console.error("Delete failed:", error);
+      toast.error(error.response?.data?.message || "Failed to delete client");
+    }
+  };
+
   if (loadingClient)
     return <p className="p-6 text-gray-500">Loading client...</p>;
   if (!clientData)
@@ -63,7 +82,7 @@ const ClientDetailsPage = () => {
         </h1>
         <button
           onClick={() => navigate(-1)}
-          className="text-md text-gray-600 hover:text-gray-900 transition"
+          className="text-md text-gray-600 cursor-pointer hover:text-gray-900 transition"
         >
           ← Back
         </button>
@@ -138,6 +157,16 @@ const ClientDetailsPage = () => {
             ))}
           </ul>
         )}
+      </div>
+
+      {/* Delete Button */}
+      <div className="flex justify-end">
+        <button
+          onClick={handleDeleteClient}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+        >
+          Delete Client
+        </button>
       </div>
     </div>
   );

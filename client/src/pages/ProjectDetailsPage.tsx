@@ -13,7 +13,6 @@ const ProjectDetails = () => {
 
   const [project, setProject] = useState<Project | null>(null);
   const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
-  const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
   const [editStatus, setEditStatus] = useState<string>("");
   const [editDueDate, setEditDueDate] = useState<string>("");
@@ -142,7 +141,7 @@ const ProjectDetails = () => {
           <button
             onClick={handleStatusUpdate}
             disabled={updating}
-            className="mt-2 bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition disabled:opacity-50"
+            className="mt-2 cursor-pointer bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition disabled:opacity-50"
           >
             {updating ? "Updating..." : "Update Status"}
           </button>
@@ -159,7 +158,7 @@ const ProjectDetails = () => {
           />
           <button
             onClick={handleDueDateUpdate}
-            className="mt-2 bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition"
+            className="mt-2 cursor-pointer bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition"
           >
             Update Due Date
           </button>
@@ -187,13 +186,13 @@ const ProjectDetails = () => {
       <div className="flex gap-4 mt-6">
         <button
           onClick={() => navigate("/projects")}
-          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
+          className="px-4 py-2 cursor-pointer bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
         >
           Back to Projects
         </button>
         <button
           onClick={handleDelete}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+          className="px-4 py-2 cursor-pointer bg-red-500 text-white rounded hover:bg-red-600 transition"
         >
           Delete Project
         </button>

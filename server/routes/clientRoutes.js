@@ -27,7 +27,7 @@ router.get('/login-from-token', clientLoginFromToken)
 router.get('/:id/projects', authenticate, getClientProjectsList);
 router.get('/:id', authenticate, getClientById);
 router.post('/create', authenticate, createClient);
-router.delete('/:id', authenticate, checkSubscription(), deleteClient);
+router.delete('/:id', authenticate,  deleteClient);
 router.post('/:id/resend-login', authenticate, resendLoginLink);
 
 
