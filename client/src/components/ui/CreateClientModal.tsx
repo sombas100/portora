@@ -74,9 +74,9 @@ const CreateClientModal = ({ isOpen, onClose, onClientCreated }: Props) => {
       {isOpen && (
         <motion.div
           className="fixed inset-0 z-50 flex justify-end bg-black/40"
-          initial={{ x: "100%" }}
+          initial={{ x: "40%" }}
           animate={{ x: 0 }}
-          exit={{ x: "100%" }}
+          exit={{ x: "60%" }}
         >
           <div className="bg-white w-full max-w-md p-6 shadow-lg h-full overflow-y-auto">
             {!loginUrl ? (

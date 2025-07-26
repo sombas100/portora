@@ -5,6 +5,7 @@ import { useAuth } from "../context/authContext";
 import type { Project, Feedback } from "../interfaces";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
+import FileUpload from "../components/ui/FileUpload";
 
 const ProjectDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,11 +13,24 @@ const ProjectDetails = () => {
   const navigate = useNavigate();
 
   const [project, setProject] = useState<Project | null>(null);
+  const [files, setFiles] = useState<any[]>([]);
+
   const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
   const [loading, setLoading] = useState(true);
   const [editStatus, setEditStatus] = useState<string>("");
   const [editDueDate, setEditDueDate] = useState<string>("");
   const [updating, setUpdating] = useState(false);
+
+  const fetchFiles = async () => {
+    try {
+      const res = await client.get(`/files/project/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setFiles(res.data);
+    } catch (err) {
+      console.error("Failed to fetch files:", err);
+    }
+  };
 
   useEffect(() => {
     if (!id || !token) return;
@@ -50,6 +64,7 @@ const ProjectDetails = () => {
 
     fetchProject();
     fetchFeedback();
+    fetchFiles();
   }, [id, token]);
 
   const handleStatusUpdate = async () => {
@@ -110,6 +125,12 @@ const ProjectDetails = () => {
     } catch (error) {
       toast.error("Failed to delete project");
     }
+  };
+
+  const handleFileUploadSuccess = () => {
+    fetchFiles();
+    toast.success("File uploaded successfully!");
+    console.log("File uploaded! You can now refresh file list here.");
   };
 
   if (loading) return <p className="p-6 text-gray-500">Loading project...</p>;
@@ -181,6 +202,11 @@ const ProjectDetails = () => {
             {format(new Date(project.createdAt), "PPP p")}
           </p>
         </div>
+
+        <FileUpload
+          projectId={project.id}
+          onUploadSuccess={handleFileUploadSuccess}
+        />
       </div>
 
       <div className="flex gap-4 mt-6">
@@ -222,6 +248,41 @@ const ProjectDetails = () => {
                   </span>
                   <span>{format(new Date(feedback.createdAt), "PPP p")}</span>
                 </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      {/* Uploaded Files Section */}
+      <div className="mt-10 border-t pt-6">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">
+          Uploaded Files
+        </h2>
+        {files.length === 0 ? (
+          <p className="text-sm text-gray-500">No files uploaded yet.</p>
+        ) : (
+          <ul className="space-y-4">
+            {files.map((file) => (
+              <li
+                key={file.id}
+                className="p-4 bg-white border rounded shadow-sm"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-800 font-medium">
+                    {file.fileName}
+                  </span>
+                  <a
+                    href={file.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-indigo-600 text-sm hover:underline"
+                  >
+                    View File
+                  </a>
+                </div>
+                <p className="text-sm text-gray-500 mt-1">
+                  Uploaded by: {file.uploader}
+                </p>
               </li>
             ))}
           </ul>

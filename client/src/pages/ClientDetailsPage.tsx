@@ -113,6 +113,14 @@ const ClientDetailsPage = () => {
 
         <div className="pt-4 border-t">
           <ResendLoginLinkButton clientId={clientData.id} />
+          <div className="flex justify-end">
+            <button
+              onClick={handleDeleteClient}
+              className="bg-red-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-red-700 transition"
+            >
+              Delete Client
+            </button>
+          </div>
         </div>
       </div>
 
@@ -157,16 +165,6 @@ const ClientDetailsPage = () => {
             ))}
           </ul>
         )}
-      </div>
-
-      {/* Delete Button */}
-      <div className="flex justify-end">
-        <button
-          onClick={handleDeleteClient}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-        >
-          Delete Client
-        </button>
       </div>
     </div>
   );

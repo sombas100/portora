@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import client from "../api/client";
-import { useClientAuth } from "../context/clientAuthContext";
+
 import type { Project } from "../interfaces";
 import { Link } from "react-router-dom";
 
 const ClientDashboard = () => {
-  const { client: loggedInClient } = useClientAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
