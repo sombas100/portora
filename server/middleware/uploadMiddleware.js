@@ -1,23 +1,15 @@
-const path = require('path');
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('../config/cloudinary');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '/uploads')
-    },
-    filename: function (req, file, cb) {
-        const uniqueName = `${Date.now()}-${file.originalname}`;
-        cb(null, uniqueName);
-    }
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'project-files',
+    allowed_formats: ['jpg', 'png', 'pdf', 'docx', 'xlsx', 'zip'],
+  },
 });
 
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|pdf|doc|docx|zip|txt/;
-  const ext = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  if (ext) cb(null, true);
-  else cb(new Error('Unsupported file type'));
-};
-
-const upload = multer({ storage, fileFilter });
+const upload = multer({ storage });
 
 module.exports = upload;
