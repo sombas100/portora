@@ -1,4 +1,7 @@
-const { Client } = require('../database/models');
+const { Client, User } = require('../database/models');
+const Stripe = require('stripe');
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 
 const planLimits = {
     free: 1,
@@ -24,7 +27,7 @@ const getBillingStatus = async (req, res) => {
             clients: {
                 used: clientCount,
                 limit: maxClients,
-                remaining
+                remaining,
             }
         })
     } catch (error) {
@@ -35,4 +38,34 @@ const getBillingStatus = async (req, res) => {
     }
 }
 
-module.exports = { getBillingStatus }
+const downgradePlan = async (req, res) => {
+    try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    
+    if (user.stripeCustomerId) {
+      const subscriptions = await stripe.subscriptions.list({
+        customer: user.stripeCustomerId,
+        status: "active",
+        limit: 1,
+      });
+
+      if (subscriptions.data.length > 0) {
+        await stripe.subscriptions.del(subscriptions.data[0].id);
+      }
+    }
+
+    await user.update({
+      plan: "free",
+      subscriptionStatus: "canceled",
+    });
+
+    return res.status(200).json({ message: "Downgraded to free plan" });
+  } catch (err) {
+    console.error("Free plan downgrade error:", err);
+    return res.status(500).json({ message: "Failed to downgrade", error: err.message });
+  }
+}
+
+module.exports = { getBillingStatus, downgradePlan }

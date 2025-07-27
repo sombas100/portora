@@ -79,22 +79,21 @@ const Sidebar = () => {
 
           {token && userPlan && (
             <>
-              {userPlan === "pro" || userPlan === "enterprise" ? (
-                <li className="flex items-center px-3 py-3 rounded-md text-gray-500 cursor-not-allowed">
-                  ✅ Subscribed ({userPlan})
-                </li>
-              ) : (
-                <li
-                  onClick={() => setShowUpgradeModal(true)}
-                  className="flex items-center px-3 py-3 rounded-md hover:bg-indigo-50 transition cursor-pointer text-indigo-600"
-                >
-                  ⚡ Upgrade Plan
-                </li>
-              )}
+              <li
+                onClick={() => setShowUpgradeModal(true)}
+                className={`flex items-center px-3 py-3 rounded-md transition cursor-pointer ${
+                  userPlan === "free"
+                    ? "hover:bg-indigo-50 text-indigo-600"
+                    : "hover:bg-yellow-50 text-yellow-600"
+                }`}
+              >
+                {userPlan === "free"
+                  ? "⚡ Upgrade Plan"
+                  : `🔁 Change Plan (${userPlan})`}
+              </li>
             </>
           )}
 
-          {/* Login / Logout */}
           {!token ? (
             <Link to="/login">
               <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer text-indigo-600">
@@ -121,7 +120,6 @@ const Sidebar = () => {
         </ul>
       </nav>
 
-      {/* Upgrade Plan Modal */}
       <UpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}

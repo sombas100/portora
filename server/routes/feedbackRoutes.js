@@ -5,7 +5,7 @@ const authenticate = require('../middleware/authMiddleware');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware');
 const ensureVerifiedClient = require('../middleware/ensureVerifiedClient');
 
-router.post('/', clientAuthenticate, ensureVerifiedClient, createFeedback);
+router.post('/', clientAuthenticate, createFeedback);
 
 router.get('/projects/:projectId/feedback', authenticate, getProjectFeedback);
 

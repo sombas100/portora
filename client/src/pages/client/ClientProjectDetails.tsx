@@ -43,7 +43,6 @@ const ClientProjectDetails = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        if (!feedbackRes) return;
         setFeedbackList(feedbackRes.data);
       } catch (err: any) {
         console.error(err.message);
@@ -78,47 +77,92 @@ const ClientProjectDetails = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-xl font-bold text-gray-800 mb-4">
-        Project: {project?.title || "Loading..."}
-      </h1>
-      <FileUpload
-        projectId={project?.id}
-        onUploadSuccess={handleFileUploadSuccess}
-      />
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-2xl font-bold text-gray-800 mb-4">Project Details</h1>
 
-      <form onSubmit={handleFeedbackSubmit} className="my-6">
-        <textarea
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Leave your feedback..."
-          className="w-full border p-3 rounded mb-2"
-          rows={4}
+      {project && (
+        <div className="bg-white rounded shadow p-4 mb-6">
+          <h2 className="text-xl font-semibold text-gray-700">
+            {project.title}
+          </h2>
+          <p className="text-sm text-gray-600 mt-2">{project.description}</p>
+          {project.dueDate && (
+            <p className="text-sm text-gray-500 mt-1">
+              Due by:{" "}
+              <span className="font-medium">
+                {new Date(project.dueDate).toLocaleDateString()}
+              </span>
+            </p>
+          )}
+          <p className="text-sm text-gray-500 mt-1">
+            Status:{" "}
+            <span className="inline-block bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-xs font-medium">
+              {project.status}
+            </span>
+          </p>
+        </div>
+      )}
+
+      {/* File Upload Section */}
+      <div className="bg-white p-4 rounded shadow mb-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">
+          Upload Files
+        </h2>
+        <FileUpload
+          projectId={project?.id}
+          onUploadSuccess={handleFileUploadSuccess}
         />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
-        >
-          Submit Feedback
-        </button>
-      </form>
+      </div>
 
-      <div className="space-y-4">
+      {/* Feedback Form */}
+      <div className="bg-white p-4 rounded shadow mb-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">
+          Leave Feedback
+        </h2>
+        <form onSubmit={handleFeedbackSubmit}>
+          <textarea
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type your feedback here..."
+            className="w-full border p-3 rounded mb-2 resize-none focus:outline-none focus:ring focus:ring-indigo-300"
+            rows={4}
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+
+      {/* Feedback Messages */}
+      <div className="mb-10">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">
+          Project Feedback
+        </h2>
         {feedbackList.length === 0 ? (
-          <p className="text-gray-500">No feedback yet.</p>
+          <p className="text-gray-500">No feedback submitted yet.</p>
         ) : (
-          feedbackList.map((fb) => (
-            <div key={fb.id} className="border rounded p-4 shadow-sm bg-white">
-              <p className="text-gray-800">{fb.message}</p>
-              <p className="text-sm text-gray-500 mt-2">
-                {new Date(fb.createdAt).toLocaleString()}
-              </p>
-            </div>
-          ))
+          <div className="space-y-4">
+            {feedbackList.map((fb) => (
+              <div
+                key={fb.id}
+                className="bg-white p-4 rounded shadow-sm border border-gray-200"
+              >
+                <p className="text-gray-700">{fb.message}</p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {new Date(fb.createdAt).toLocaleString()}
+                </p>
+              </div>
+            ))}
+          </div>
         )}
       </div>
-      <div className="mt-10 border-t pt-6">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">
+
+      {/* Uploaded Files */}
+      <div className="bg-white p-4 rounded shadow">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">
           Uploaded Files
         </h2>
         {files.length === 0 ? (
@@ -128,24 +172,24 @@ const ClientProjectDetails = () => {
             {files.map((file) => (
               <li
                 key={file.id}
-                className="p-4 bg-white border rounded shadow-sm"
+                className="p-4 bg-gray-50 rounded border flex justify-between items-center"
               >
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-800 font-medium">
+                <div>
+                  <p className="text-sm font-medium text-gray-800">
                     {file.fileName}
-                  </span>
-                  <a
-                    href={file.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 text-sm hover:underline"
-                  >
-                    View File
-                  </a>
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Uploaded by: {file.uploader}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-500 mt-1">
-                  Uploaded by: {file.uploader}
-                </p>
+                <a
+                  href={file.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:underline text-sm"
+                >
+                  View File
+                </a>
               </li>
             ))}
           </ul>

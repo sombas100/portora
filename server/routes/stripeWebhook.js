@@ -48,11 +48,6 @@ router.post(
           if (priceId === process.env.STRIPE_PRO_PRICE_ID) plan = 'pro';
           if (priceId === process.env.STRIPE_ENTERPRISE_PRICE_ID) plan = 'enterprise';
 
-          console.log(`✅ Subscription completed for customer: ${customerId}`);
-          console.log(`📝 Updating user ${user.email} to plan: ${plan} with status: ${subscription.status}`);
-          console.log('💡 Webhook session mode:', session.mode);
-
-
 
           await user.update({
             subscriptionStatus: subscription.status, 
