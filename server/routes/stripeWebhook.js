@@ -6,7 +6,7 @@ const { User } = require('../database/models');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post(
-  '/webhook',
+  '/',
   express.raw({ type: 'application/json' }),
   async (req, res) => {
     const sig = req.headers['stripe-signature'];
@@ -27,10 +27,17 @@ router.post(
       switch (event.type) {
         case 'checkout.session.completed': {
           const session = event.data.object;
+          console.log('🔍 Full session object:', session);
+
           const customerId = session.customer;
 
           const user = await User.findOne({ where: { stripeCustomerId: customerId } });
           if (!user) break;
+
+          if (!session.subscription) {
+          console.warn('No subscription found on checkout session');
+          break;
+        }
 
       
           const subscription = await stripe.subscriptions.retrieve(session.subscription);
@@ -40,6 +47,12 @@ router.post(
           let plan = 'starter'; 
           if (priceId === process.env.STRIPE_PRO_PRICE_ID) plan = 'pro';
           if (priceId === process.env.STRIPE_ENTERPRISE_PRICE_ID) plan = 'enterprise';
+
+          console.log(`✅ Subscription completed for customer: ${customerId}`);
+          console.log(`📝 Updating user ${user.email} to plan: ${plan} with status: ${subscription.status}`);
+          console.log('💡 Webhook session mode:', session.mode);
+
+
 
           await user.update({
             subscriptionStatus: subscription.status, 

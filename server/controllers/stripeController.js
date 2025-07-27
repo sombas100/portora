@@ -53,6 +53,12 @@ const createCheckoutSession = async (req, res) => {
           quantity: 1,
         },
       ],
+      subscription_data: {
+        metadata: {
+        userId: user.id,
+        plan: plan
+      }
+    },
       success_url: `${process.env.FRONTEND_URL}/billing-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/billing-cancelled`,
     });
