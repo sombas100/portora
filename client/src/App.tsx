@@ -14,6 +14,8 @@ import ClientProjectDetails from "./pages/client/ClientProjectDetails";
 import BillingCancelled from "./pages/stripe/BillingCancel";
 import BillingSuccess from "./pages/stripe/BillingSuccess";
 import CancelSubscriptionPage from "./pages/stripe/CancelSubscriptionPage";
+import FreelancerChatLayout from "./pages/chat/FreelancerChatLayout";
+import ClientChatLayout from "./pages/chat/ClientChatLayout";
 
 function App() {
   return (
@@ -25,10 +27,12 @@ function App() {
           <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/clients/:id" element={<ClientDetailsPage />} />
+          <Route path="/chat" element={<FreelancerChatLayout />} />
         </Route>
         <Route path="/client-dashboard" element={<ClientDashboardLayout />}>
           <Route index element={<ClientDashboard />} />
           <Route path="projects/:id" element={<ClientProjectDetails />} />
+          <Route path="chat" element={<ClientChatLayout />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/client-login" element={<ClientLoginPage />} />

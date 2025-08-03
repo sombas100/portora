@@ -5,6 +5,7 @@ import {
   RiLoginCircleLine,
   RiLogoutCircleLine,
 } from "react-icons/ri";
+import { FaCommentDots } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { toast } from "react-toastify";
@@ -74,6 +75,12 @@ const Sidebar = () => {
             <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
               <RiFolder3Fill className="mr-3 text-xl" />
               Projects
+            </li>
+          </Link>
+          <Link to="/chat">
+            <li className="flex items-center px-3 py-3 rounded-md hover:bg-emerald-50 transition cursor-pointer">
+              <FaCommentDots className="mr-3 text-xl" />
+              Chat
             </li>
           </Link>
 

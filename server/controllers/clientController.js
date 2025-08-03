@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, Project } = require('../database/models');
+const { Client, Project, User } = require('../database/models');
 const jwt = require('jsonwebtoken');
 const sendClientLoginEmail = require('../utils/sendClientLoginEmail');
 
@@ -44,6 +44,28 @@ const getClientById = async (req, res) => {
         res.status(500).json({ message: 'Error fetching client', error: error.message });
     }
 }
+
+const getMyFreelancer = async (req, res) => {
+  try {
+    const clientId = req.client.id;
+
+    const client = await Client.findByPk(clientId, {
+      include: {
+        model: User,
+        attributes: ['id', 'name', 'email', ]
+      }
+    });
+
+    if (!client || !client.User) {
+      return res.status(404).json({ message: 'Freelancer not found' });
+    }
+
+    res.json({ freelancer: client.User });
+  } catch (error) {
+    console.error("Error fetching freelancer:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 
 const generateClientToken = (client) => {
     return jwt.sign(
@@ -167,6 +189,7 @@ const getClientProjectsList = async (req, res) => {
 module.exports = {
     getAllClients,
     getClientById,
+    getMyFreelancer,
     getClientProjectsList, 
     createClient,
     deleteClient,

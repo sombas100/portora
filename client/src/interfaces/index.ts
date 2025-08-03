@@ -39,3 +39,13 @@ export interface Feedback {
         lastName: string;
     }
 }
+
+export interface Chat {
+    id?: number;
+    content: string;
+    senderId: number;
+    receiverId: number;
+    senderType: string;
+    receiverType: string;
+    createdAt?: string;
+}

@@ -11,8 +11,8 @@ const ClientSidebar = () => {
       icon: <FaProjectDiagram />,
     },
     {
-      label: "Feedback",
-      path: "/client-dashboard/feedback",
+      label: "Chat",
+      path: "/client-dashboard/chat",
       icon: <FaCommentDots />,
     },
   ];
