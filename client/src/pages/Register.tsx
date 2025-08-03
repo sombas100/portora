@@ -1,38 +1,43 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import client from "../api/client";
 
-const Login = () => {
-  const { login } = useAuth();
+const Register = () => {
+  const { register } = useAuth();
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await client.post("/auth/login", { email, password });
-      const { token, user } = res.data;
-
-      login(token, user.name, user.role);
+    const result = await register(name, email, password);
+    if (result.success) {
       navigate("/");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
+    } else {
+      setError(result.message || "Registration failed");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
-        onSubmit={handleLogin}
+        onSubmit={handleRegister}
         className="bg-white p-8 shadow-lg rounded-md w-96"
       >
-        <h2 className="text-2xl font-bold mb-4">Freelancer Login</h2>
+        <h2 className="text-2xl font-bold mb-4">Freelancer Register</h2>
 
         {error && <p className="text-red-500 mb-3">{error}</p>}
+
+        <input
+          type="text"
+          className="w-full p-2 border mb-4 rounded"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
         <input
           type="email"
@@ -50,23 +55,22 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <p className="text-sm py-2">
-          Don't have a Portora acount?
-          <Link to={"/register"}>
-            <span className="text-xs pl-1 text-blue-500 hover:text-blue-700">
-              Register here
+          Already have a portora account?{" "}
+          <Link to={"/login"}>
+            <span className="text-xs text-blue-500 hover:text-blue-700 cursor-pointer">
+              Login here
             </span>
           </Link>
         </p>
-
         <button
           type="submit"
-          className="w-full bg-emerald-500 text-white py-2 rounded cursor-pointer hover:bg-emerald-600 transition"
+          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition"
         >
-          Log In
+          Register
         </button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

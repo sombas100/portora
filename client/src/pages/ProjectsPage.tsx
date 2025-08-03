@@ -130,9 +130,7 @@ const ProjectsPage = () => {
                     View
                   </button>
                 </Link>
-                <button className="text-sm cursor-pointer text-yellow-600 hover:underline">
-                  Edit
-                </button>
+
                 <button
                   onClick={() => handleDelete(project.id)}
                   className="text-sm cursor-pointer text-red-600 hover:underline"

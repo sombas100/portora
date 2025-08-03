@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const { sequelize } = require('./database/models/index');
-const { Message } = require('./database/models');
+const { Message, User } = require('./database/models');
+
 
 const http = require('http');
 const { Server } = require('socket.io');
@@ -60,6 +61,19 @@ io.on('connection', (socket) => {
     const { senderId, receiverId, senderType, receiverType, content } = data;
 
     try {
+
+      if (senderType === 'Freelancer'){
+        const user = await User.findByPk(senderId);
+        if (!user) return;
+        
+        const allowedPlans = ['pro', 'enterprise'];
+        if (!allowedPlans.includes(user.plan)) {
+          socket.emit('chatError', {
+          message: 'Chat feature is only available to Pro and Enterprise users. Please upgrade your plan to continue.',
+        });
+        return;          
+        }
+      }
       const newMessage = await Message.create({
         senderId,
         receiverId,

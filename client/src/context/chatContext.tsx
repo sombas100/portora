@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import type { Chat } from "../interfaces";
+import { toast } from "react-toastify";
 
 const socket = io("http://localhost:3000");
 
@@ -25,8 +26,13 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       setMessages((prev) => [...prev, msg]);
     });
 
+    socket.on("chatError", (error: { message: string }) => {
+      toast.error(error.message);
+    });
+
     return () => {
       socket.off("newMessage");
+      socket.off("chatError");
     };
   }, []);
 

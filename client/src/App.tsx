@@ -16,6 +16,7 @@ import BillingSuccess from "./pages/stripe/BillingSuccess";
 import CancelSubscriptionPage from "./pages/stripe/CancelSubscriptionPage";
 import FreelancerChatLayout from "./pages/chat/FreelancerChatLayout";
 import ClientChatLayout from "./pages/chat/ClientChatLayout";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="chat" element={<ClientChatLayout />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/client-login" element={<ClientLoginPage />} />
         <Route path="/billing-success" element={<BillingSuccess />} />
         <Route path="/billing-cancelled" element={<BillingCancelled />} />

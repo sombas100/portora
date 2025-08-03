@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
+import client from "../api/client";
 
 type UserRole = "Freelancer" | "Client";
 
@@ -17,6 +18,12 @@ interface AuthContextType {
   name: string | null;
   token: string | null;
   isAuthenticated: boolean;
+  register: (
+    name: string,
+    email: string,
+    password: string
+  ) => Promise<{ success: boolean; message?: string }>;
+
   login: (token: string, name: string, role: UserRole) => void;
   logout: () => void;
 }
@@ -47,6 +54,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  const register = async (name: string, email: string, password: string) => {
+    try {
+      const res = await client.post("/auth/register", {
+        name,
+        email,
+        password,
+      });
+
+      const { token, user } = res.data;
+      login(token, user.name, user.role);
+      return { success: true };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Registration failed",
+      };
+    }
+  };
+
   const login = (newToken: string, name: string, userRole: UserRole) => {
     const decoded = jwtDecode<DecodedToken>(newToken);
     setUser(decoded);
@@ -73,6 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     name,
     role,
     isAuthenticated: !!token,
+    register,
     login,
     logout,
   };

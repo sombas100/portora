@@ -92,7 +92,7 @@ const Dashboard = () => {
                   : "bg-red-100 text-red-600"
               }`}
             >
-              {status}
+              {status.toUpperCase()}
             </span>
           </div>
         </div>
