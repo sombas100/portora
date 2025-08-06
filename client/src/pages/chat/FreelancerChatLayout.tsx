@@ -13,7 +13,9 @@ const FreelancerChatLayout = () => {
     const fetchClients = async () => {
       try {
         const res = await client.get("/clients", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("freelancerToken")}`,
+          },
         });
         setClients(res.data.clients);
       } catch (err) {
