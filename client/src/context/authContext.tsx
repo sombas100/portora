@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [role, setRole] = useState<UserRole | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = localStorage.getItem("freelancerToken");
     const storedRole = localStorage.getItem("role") as UserRole;
     const storedName = localStorage.getItem("name");
     if (storedToken) {
@@ -88,7 +88,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(newToken);
     setName(name);
     setRole(userRole);
-    localStorage.setItem("token", newToken);
+
+    localStorage.setItem("freelancerToken", newToken);
     localStorage.setItem("role", userRole);
     localStorage.setItem("name", name);
   };
@@ -97,7 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     setToken(null);
     setRole(null);
-    localStorage.removeItem("token");
+    localStorage.removeItem("freelancerToken");
     localStorage.removeItem("name");
     localStorage.removeItem("role");
   };
