@@ -10,7 +10,12 @@ const { Server } = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
-const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:5173'];
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URL_ALT,
+  'http://localhost:5173'
+];
+
 
 
 const io = new Server(server, {
