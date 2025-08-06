@@ -3,7 +3,9 @@ import { io, Socket } from "socket.io-client";
 import type { Chat } from "../interfaces";
 import { toast } from "react-toastify";
 
-const socket = io("http://localhost:3000");
+const socket = io(import.meta.env.VITE_SOCKET_URL, {
+  transports: ["websocket"],
+});
 
 interface ChatContextType {
   socket: Socket;
