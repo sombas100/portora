@@ -41,7 +41,7 @@ const CreateClientModal = ({ isOpen, onClose, onClientCreated }: Props) => {
 
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("freelancerToken");
       const res = await client.post("/clients/create", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
