@@ -31,7 +31,7 @@ const CreateProjectModal: FC<Props> = ({
     setError("");
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("freelancerToken");
       await client.post(
         "/projects/create",
         {
