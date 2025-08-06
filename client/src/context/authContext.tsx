@@ -43,13 +43,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (storedToken) {
       try {
         const decoded = jwtDecode<DecodedToken>(storedToken);
+        const isExpired =
+          (decoded as any).exp && Date.now() >= (decoded as any).exp * 1000;
+
+        if (isExpired) {
+          console.warn("Token has expired.");
+          logout();
+          return;
+        }
+
         setUser(decoded);
         setToken(storedToken);
         setName(storedName);
         setRole(storedRole);
       } catch (error) {
-        console.error("Invlaid token", error);
-        logout();
+        console.error("Invalid token format or structure:", error);
+        localStorage.removeItem("token");
       }
     }
   }, []);
