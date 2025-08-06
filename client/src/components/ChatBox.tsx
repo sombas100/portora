@@ -23,7 +23,9 @@ const ChatBox = ({
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem(isClient ? "clientToken" : "token");
+    const token = localStorage.getItem(
+      isClient ? "clientToken" : "freelancerToken"
+    );
     const endpoint = isClient
       ? `/messages/client/history/${participantId}`
       : `/messages/history/${participantId}`;
@@ -56,7 +58,7 @@ const ChatBox = ({
       receiverType,
     };
 
-    sendMessage(newMessage); // <-- This will emit AND update state
+    sendMessage(newMessage);
     setInput("");
   };
 

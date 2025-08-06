@@ -57,7 +57,9 @@ const UpgradeModal = ({ isOpen, onClose }: Props) => {
           {},
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem(
+                "freelancerToken"
+              )}`,
             },
           }
         );
@@ -70,7 +72,9 @@ const UpgradeModal = ({ isOpen, onClose }: Props) => {
         "/stripe/create-checkout-session",
         { plan: selectedPlan },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("freelancerToken")}`,
+          },
         }
       );
       window.location.href = res.data.url;

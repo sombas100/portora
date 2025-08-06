@@ -30,7 +30,7 @@ const FileUpload = ({ projectId, onUploadSuccess }: Props) => {
       formData.append("file", file);
       formData.append("projectId", String(projectId));
 
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("freelancerToken");
       await client.post("/files/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
