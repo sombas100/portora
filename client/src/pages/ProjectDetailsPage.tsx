@@ -134,7 +134,9 @@ const ProjectDetails = () => {
   };
 
   if (loading)
-    return <p className="p-6 animate-spin text-gray-500">Loading project...</p>;
+    return (
+      <p className="p-6 animate-spin text-gray-500">Loading projects...</p>
+    );
 
   if (!project) return <p className="p-6 text-gray-500">Project not found.</p>;
 
