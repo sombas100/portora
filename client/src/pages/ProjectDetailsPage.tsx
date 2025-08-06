@@ -133,7 +133,8 @@ const ProjectDetails = () => {
     console.log("File uploaded! You can now refresh file list here.");
   };
 
-  if (loading) return <p className="p-6 text-gray-500">Loading project...</p>;
+  if (loading)
+    return <p className="p-6 animate-spin text-gray-500">Loading project...</p>;
 
   if (!project) return <p className="p-6 text-gray-500">Project not found.</p>;
 

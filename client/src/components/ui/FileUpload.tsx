@@ -6,7 +6,7 @@ interface Props {
   projectId: number | undefined;
   onUploadSuccess: () => void;
   token: string | null;
-  isClient?: boolean; // ✅ Add isClient to decide route
+  isClient?: boolean;
 }
 
 const FileUpload = ({
@@ -51,7 +51,6 @@ const FileUpload = ({
         },
       });
 
-      toast.success("File uploaded successfully!");
       setFile(null);
       onUploadSuccess();
     } catch (error: any) {
