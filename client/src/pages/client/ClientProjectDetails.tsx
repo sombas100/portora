@@ -111,6 +111,8 @@ const ClientProjectDetails = () => {
         <FileUpload
           projectId={project?.id}
           onUploadSuccess={handleFileUploadSuccess}
+          token={token}
+          isClient={true}
         />
       </div>
 

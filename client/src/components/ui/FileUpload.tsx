@@ -5,9 +5,16 @@ import client from "../../api/client";
 interface Props {
   projectId: number | undefined;
   onUploadSuccess: () => void;
+  token: string | null;
+  isClient?: boolean; // ✅ Add isClient to decide route
 }
 
-const FileUpload = ({ projectId, onUploadSuccess }: Props) => {
+const FileUpload = ({
+  projectId,
+  onUploadSuccess,
+  token,
+  isClient = false,
+}: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -30,8 +37,14 @@ const FileUpload = ({ projectId, onUploadSuccess }: Props) => {
       formData.append("file", file);
       formData.append("projectId", String(projectId));
 
-      const token = localStorage.getItem("freelancerToken");
-      await client.post("/files/upload", formData, {
+      if (!token) {
+        toast.error("Missing authentication token.");
+        return;
+      }
+
+      const uploadUrl = isClient ? "/files/client/upload" : "/files/upload";
+
+      await client.post(uploadUrl, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
