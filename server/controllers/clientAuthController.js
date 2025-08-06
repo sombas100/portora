@@ -26,7 +26,7 @@ const clientLoginFromToken = async (req, res) => {
                 company: client.company 
             }, 
             process.env.JWT_SECRET, 
-            { expiresIn: '6h' }
+            { expiresIn: '7d' }
         )
         res.status(200).json({ 
             message: 'Client login successful',
