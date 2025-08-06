@@ -1,0 +1,11 @@
+console.log('📦 Loading .sequelizerc...');
+require('dotenv').config();
+
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve(__dirname, 'database', 'config.js'), 
+  'models-path': path.resolve(__dirname, 'database', 'models'),
+  'migrations-path': path.resolve(__dirname, 'database', 'migrations'),
+  'seeders-path': path.resolve(__dirname, 'database', 'seeders'),
+};
