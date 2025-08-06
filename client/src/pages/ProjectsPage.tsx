@@ -32,6 +32,8 @@ const ProjectsPage = () => {
   }, [token]);
 
   const handleDelete = async (id: number) => {
+    if (!window.confirm("Are you sure you want to delete this project?"))
+      return;
     try {
       await client.delete(`/projects/${id}`, {
         headers: { Authorization: `Bearer ${token}` },

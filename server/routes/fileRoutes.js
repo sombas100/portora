@@ -4,10 +4,11 @@ const upload = require('../middleware/uploadMiddleware');
 const authenticate = require('../middleware/authMiddleware');
 const { uploadFile, getFilesByProjectId } = require('../controllers/fileController');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware');
-const eitherAuth = require('../middleware/eitherAuth')
+const eitherAuth = require('../middleware/eitherAuth');
+const ensureVerifiedClient = require('../middleware/ensureVerifiedClient');
 
 router.post('/upload', authenticate, upload.single('file'), uploadFile);
-router.post('/client/upload', clientAuthenticate, upload.single('file'), uploadFile);
+router.post('/client/upload', clientAuthenticate, ensureVerifiedClient, upload.single('file'), uploadFile);
 router.get('/project/:projectId', eitherAuth, getFilesByProjectId);
 
 module.exports = router;
