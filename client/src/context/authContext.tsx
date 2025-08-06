@@ -18,6 +18,7 @@ interface AuthContextType {
   name: string | null;
   token: string | null;
   isAuthenticated: boolean;
+  loading: boolean;
   register: (
     name: string,
     email: string,
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<DecodedToken | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [role, setRole] = useState<UserRole | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("freelancerToken");
@@ -61,6 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem("token");
       }
     }
+    setLoading(false);
   }, []);
 
   const register = async (name: string, email: string, password: string) => {
@@ -109,6 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     name,
     role,
     isAuthenticated: !!token,
+    loading,
     register,
     login,
     logout,
