@@ -4,9 +4,11 @@ const { createFeedback, getProjectFeedback } = require('../controllers/feedbackC
 const authenticate = require('../middleware/authMiddleware');
 const clientAuthenticate = require('../middleware/clientAuthMiddleware');
 const ensureVerifiedClient = require('../middleware/ensureVerifiedClient');
+const eitherAuth = require('../middleware/eitherAuth');
+
 
 router.post('/', clientAuthenticate, createFeedback);
 
-router.get('/projects/:projectId/feedback', authenticate, clientAuthenticate, getProjectFeedback);
+router.get('/projects/:projectId/feedback', eitherAuth, getProjectFeedback);
 
 module.exports = router;
