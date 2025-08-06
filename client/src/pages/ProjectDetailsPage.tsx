@@ -206,6 +206,7 @@ const ProjectDetails = () => {
         <FileUpload
           projectId={project.id}
           onUploadSuccess={handleFileUploadSuccess}
+          token={token}
         />
       </div>
 
