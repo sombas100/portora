@@ -17,12 +17,20 @@ import CancelSubscriptionPage from "./pages/stripe/CancelSubscriptionPage";
 import FreelancerChatLayout from "./pages/chat/FreelancerChatLayout";
 import ClientChatLayout from "./pages/chat/ClientChatLayout";
 import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <div className="bg-gray-200">
       <Routes>
-        <Route path="/" element={<DashboardLayout />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
