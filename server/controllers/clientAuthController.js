@@ -10,7 +10,6 @@ const clientLoginFromToken = async (req, res) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('Decoded token:', decoded);
         const client = await Client.findByPk(decoded.id);
         if (!client) return res.status(404).json({ message: 'Client not found' });
 

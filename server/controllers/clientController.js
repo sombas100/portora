@@ -98,7 +98,7 @@ const resendLoginLink = async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    const loginUrl = `http://localhost:5173/client-login?token=${token}`;
+    const loginUrl = `${process.env.FRONTEND_URL}/client-login?token=${token}`;
     const fullName = `${client.firstName} ${client.lastName}`;
 
     await sendClientLoginEmail(client.email, fullName, loginUrl);
@@ -136,7 +136,7 @@ const createClient = async (req, res) => {
     const client = await Client.create({ firstName, lastName, email, company, userId });
 
     const token = generateClientToken(client);
-    const loginUrl = `http://localhost:5173/client-login?token=${token}`;
+    const loginUrl = `${process.env.FRONTEND_URL}/client-login?token=${token}`;
     const fullName = `${client.firstName} ${client.lastName}`;
 
     

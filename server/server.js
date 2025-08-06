@@ -10,13 +10,17 @@ const { Server } = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
+const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:5173'];
+
 
 const io = new Server(server, {
-    cors: {
-        origin: 'http://localhost:5173',
-        methods: ['GET', 'POST']
-    },
-})
+  cors: {
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+
 
 const authRoutes = require('./routes/authRoutes');
 const stripeRoutes = require('./routes/stripeRoutes');
@@ -32,8 +36,14 @@ const messageRoutes = require('./routes/messageRoutes');
 app.use('/uploads', express.static('uploads'));
 app.use('/api/stripe/webhook', webhookRoutes);
 
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 
 app.use('/api/auth', authRoutes);
