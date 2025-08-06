@@ -7,6 +7,6 @@ const clientAuthenticate = require('../middleware/clientAuthMiddleware');
 
 router.post('/upload', authenticate, upload.single('file'), uploadFile);
 router.post('/client/upload', clientAuthenticate, upload.single('file'), uploadFile);
-router.get('/project/:projectId', authenticate, getFilesByProjectId);
+router.get('/project/:projectId', authenticate, clientAuthenticate, getFilesByProjectId);
 
 module.exports = router;
