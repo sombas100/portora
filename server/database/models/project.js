@@ -13,8 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Project.belongsTo(models.User, { foreignKey: 'userId'} );
       Project.belongsTo(models.Client, { foreignKey:  'clientId' });
-      Project.hasMany(models.File, { foreignKey: 'projectId' });
-      Project.hasMany(models.Feedback, { foreignKey: 'projectId' });
+      Project.hasMany(models.File, { 
+        foreignKey: 'projectId', 
+        onDelete: 'CASCADE',
+      hooks: true,
+      });
+      Project.hasMany(models.Feedback, { 
+        foreignKey: 'projectId',
+        onDelete: 'CASCADE',
+        hooks: true,
+      });
     }
   }
   Project.init({
