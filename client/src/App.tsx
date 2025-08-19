@@ -18,10 +18,11 @@ import FreelancerChatLayout from "./pages/chat/FreelancerChatLayout";
 import ClientChatLayout from "./pages/chat/ClientChatLayout";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
-    <div className="bg-gray-200">
+    <div className="">
       <Routes>
         <Route
           path="/"
@@ -45,6 +46,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/welcome" element={<LandingPage />} />
         <Route path="/client-login" element={<ClientLoginPage />} />
         <Route path="/billing-success" element={<BillingSuccess />} />
         <Route path="/billing-cancelled" element={<BillingCancelled />} />

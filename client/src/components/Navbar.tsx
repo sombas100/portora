@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="text-right hidden md:block">
           {user && (
             <>
-              <p className="text-sm text-gray-500">Welcome back,</p>
+              <p className="text-sm text-gray-500">Welcome,</p>
               <h2 className="text-md font-semibold text-gray-800">
                 {user?.name || "Guest"}
               </h2>
