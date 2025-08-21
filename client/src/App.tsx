@@ -25,8 +25,10 @@ import FAQ from "./pages/landing/FAQ";
 import Support from "./pages/landing/Support";
 import PrivacyPolicy from "./pages/landing/PrivacyPolicy";
 import Terms from "./pages/landing/Terms";
+import { usePageTitle } from "./hooks/usePageTitle";
 
 function App() {
+  usePageTitle();
   return (
     <div className="">
       <Routes>
