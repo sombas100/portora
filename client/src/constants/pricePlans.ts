@@ -1,4 +1,10 @@
-export const pricePlans = [
+export interface pricePlan {
+    title: string;
+    price: string;
+    features: string[]
+}
+
+export const pricePlans: pricePlan[] = [
     {
         title: 'Free',
         price: '£0.00',

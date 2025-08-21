@@ -1,12 +1,16 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="bg-gray-100 text-gray-700 mt-12 border-t">
       <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8">
         {/* Logo and description */}
         <div>
-          <h1 className="text-xl uppercase tracking-wider font-bold">
-            Portora
-          </h1>
+          <Link to={"/welcome"}>
+            <h1 className="text-xl cursor-pointer uppercase tracking-wider font-bold">
+              Portora
+            </h1>
+          </Link>
           <p className="mt-4 text-sm">
             Streamline your client communication, file sharing, and feedback all
             in one place.
@@ -45,7 +49,7 @@ const Footer = () => {
           <h3 className="font-semibold text-lg mb-3">Resources</h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <a href="/faq" className="hover:text-emerald-600">
+              <a href="/FAQ" className="hover:text-emerald-600">
                 FAQ
               </a>
             </li>

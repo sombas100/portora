@@ -19,6 +19,12 @@ import ClientChatLayout from "./pages/chat/ClientChatLayout";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LandingPage from "./pages/LandingPage";
+import Features from "./pages/landing/Features";
+import Pricing from "./pages/landing/Pricing";
+import FAQ from "./pages/landing/FAQ";
+import Support from "./pages/landing/Support";
+import PrivacyPolicy from "./pages/landing/PrivacyPolicy";
+import Terms from "./pages/landing/Terms";
 
 function App() {
   return (
@@ -47,6 +53,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/welcome" element={<LandingPage />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/FAQ" element={<FAQ />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="/client-login" element={<ClientLoginPage />} />
         <Route path="/billing-success" element={<BillingSuccess />} />
         <Route path="/billing-cancelled" element={<BillingCancelled />} />

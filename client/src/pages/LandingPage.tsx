@@ -15,26 +15,18 @@ import projects from "../../public/portora-projects-page.png";
 import hero2 from "../../public/standsome-worklifestyle-zY1ZWW1_CqE-unsplash.jpg";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import LandingNavbar from "../components/LandingNavbar";
 
 const LandingPage = () => {
   return (
     <>
       <section className="w-full h-screen bg-white flex flex-col">
         {/* Navbar */}
-        <div className="flex items-center justify-between px-30 pt-4">
-          <h1 className="text-xl uppercase tracking-wider font-bold">
-            Portora
-          </h1>
-          <Link to={"/login"}>
-            <button className="bg-emerald-500 font-semibold rounded-2xl text-white px-4 py-2 hover:bg-white hover:text-emerald-500 border cursor-pointer transition-all ease-in">
-              Get Started
-            </button>
-          </Link>
-        </div>
+        <LandingNavbar />
 
         {/* Content */}
         <div className="flex-grow flex items-center justify-center">
-          <div className="w-full max-w-[1600px] h-[46rem] rounded-2xl shadow-sm bg-linear-to-t from-white from-5% to-emerald-500 via-90% grid lg:grid-cols-2 items-center justify-center">
+          <div className="w-full max-w-[1600px] h-[46rem] rounded-2xl bg-linear-to-t from-white from-5% to-emerald-500 via-90% grid lg:grid-cols-2 items-center justify-center">
             <div className="p-20">
               <h2 className="text-5xl font-bold text-white">
                 Portora – Your Modern Client Portal
@@ -43,7 +35,8 @@ const LandingPage = () => {
                 All-in-one workspace for freelancers and agencies to manage
                 clients, collaborate on projects, and centralize communication.
               </p>
-              <Link to={"/login"}>
+              <div></div>
+              <Link to={"/register"}>
                 <button className="bg-white font-semibold text-black mt-8 rounded-2xl px-4 py-2  hover:text-gray-400  cursor-pointer transition-all ease-in">
                   Get Started
                 </button>
@@ -203,6 +196,11 @@ const LandingPage = () => {
             <p className="text-white italic font-bold text-xl">
               No setup headaches. No client onboarding required.
             </p>
+            <Link to={"/register"}>
+              <button className="px-4 py-2 mt-4 font-semibold cursor-pointer hover:text-gray-300 bg-white rounded-xl transition-all ease-in-out">
+                Register Here
+              </button>
+            </Link>
           </div>
           <div>
             <img className="p-4 rounded-4xl" src={hero2} alt="" />
@@ -210,35 +208,36 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="w-full h-[550px] bg-white flex flex-col">
-        <div className="flex flex-col items-center justify-center mt-12">
-          <h1 className="text-4xl font-bold text-black/60">
+      <section className="w-full bg-white px-4 py-16">
+        <div className="flex flex-col items-center justify-center text-center mb-12">
+          <h1 className="text-3xl lg:text-4xl font-bold text-black/60">
             Upgrade for Premium Collaboration
           </h1>
-          <p className="text-lg font-semibold mt-4 text-black/60">
+          <p className="text-base lg:text-lg font-semibold mt-4 text-black/60">
             Unlock features built for scale and professionalism.
           </p>
-          <p className="text-lg italic font-semibold text-black/60">
+          <p className="text-base lg:text-lg italic font-semibold text-black/60">
             Cancel anytime. No hidden fees.
           </p>
         </div>
-        <div className="grid lg:grid-cols-4 p-4 gap-4 items-center justify-center">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {pricePlans.map((plan, index) => (
             <div
               key={index}
               className={`
-      h-auto min-h-[300px] shadow-xl w-full p-6 mt-8 flex flex-col items-center rounded transition
-      ${
-        plan.title === "Enterprise"
-          ? "bg-gradient-to-br from-emerald-300 via-emerald-400 to-black text-white"
-          : plan.title === "Pro"
-          ? "bg-gradient-to-br from-blue-800 via-blue-900 to-black text-white"
-          : "bg-gray-50 text-gray-900"
-      }
-    `}
+          shadow-xl w-full p-6 flex flex-col items-center rounded transition
+          ${
+            plan.title === "Enterprise"
+              ? "bg-gradient-to-br from-emerald-300 via-emerald-400 to-black text-white"
+              : plan.title === "Pro"
+              ? "bg-gradient-to-br from-blue-800 via-blue-900 to-black text-white"
+              : "bg-gray-50 text-gray-900"
+          }
+        `}
             >
               <h2 className="font-semibold text-lg mb-3">{plan.title}</h2>
-              <h3 className="text-4xl mb-4 font-bold">
+              <h3 className="text-3xl mb-4 font-bold">
                 {plan.price}
                 <span className="text-xs">/month</span>
               </h3>
@@ -258,16 +257,16 @@ const LandingPage = () => {
       </section>
 
       <section className="w-full bg-white py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+        <div className="max-w-4xl flex flex-col mx-auto text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
             Build Trust With Every Client Interaction
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-base lg:text-lg text-gray-600 mb-8">
             Portora helps you deliver work more efficiently — and present your
             brand more professionally.
           </p>
 
-          <Link to={"/login"}>
+          <Link to="/login">
             <button className="px-8 py-3 bg-emerald-400 hover:bg-emerald-700 text-white text-lg rounded-full cursor-pointer transition duration-300 shadow-md">
               Create Your First Portal
             </button>
@@ -279,7 +278,6 @@ const LandingPage = () => {
           </p>
         </div>
       </section>
-
       <Footer />
     </>
   );
